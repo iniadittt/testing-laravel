@@ -6,6 +6,8 @@ COPY composer.lock composer.json /var/www/html/
 # Set working directory
 WORKDIR /var/www/html/
 
+RUN composer install
+
 # Install dependencies for the operating system software
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -43,4 +45,4 @@ RUN chown -R www-data:www-data \
 
 # Expose port 9000 and start php-fpm server (for FastCGI Process Manager)
 EXPOSE 8080
-CMD ["php", "artisan", "serve"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
